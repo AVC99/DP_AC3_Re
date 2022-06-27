@@ -32,6 +32,7 @@ public class DedicatedServer implements Runnable {
                 switch (socketData.getAction()) {
                     case USER_IN -> {
                        this.serverView.addPlayer(JsonManager.getPlayer(socketData.getData()));
+                       this.serverView.addLog("Player " + JsonManager.getPlayer(socketData.getData()).getName() + " has joined the server.");
                     }
                 }
 

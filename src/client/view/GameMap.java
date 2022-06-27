@@ -1,4 +1,9 @@
-package client.model;
+package client.view;
+
+import client.model.Enemy;
+import client.model.FilePath;
+import client.model.Fly;
+import client.model.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -87,6 +92,8 @@ public class GameMap extends JPanel {
                 for(Player p: playerList){
                     if(j==p.getxPosition() && i==p.getyPosition()){
                         g.drawImage(playerImage,i*cellWidth,j*cellHeight,cellWidth,cellHeight,null);
+
+                        g.drawString(p.getName(),i*cellWidth+3,j*cellHeight+3);
                     }
                 }
 

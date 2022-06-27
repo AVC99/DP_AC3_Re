@@ -1,8 +1,7 @@
 package client;
 
-import client.controller.ButtonController;
 import client.controller.ClientController;
-import client.model.GameMap;
+import client.view.GameMap;
 import client.model.Player;
 import client.model.RealTimeListener;
 import client.model.persistance.MapDAO;

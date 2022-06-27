@@ -58,7 +58,7 @@ public class ServerView extends JFrame {
     private void configureLeft() {
         logPanel= new JPanel();
         logPanel.setLayout(new BoxLayout(logPanel,BoxLayout.Y_AXIS));
-        logPanel.setBorder(BorderFactory.createTitledBorder("Movements"));
+        logPanel.setBorder(BorderFactory.createTitledBorder("Logs"));
         logScrollPane= new JScrollPane(logPanel);
         add(logScrollPane);
         revalidate();
@@ -67,7 +67,7 @@ public class ServerView extends JFrame {
     private void configureRight() {
         playerPanel= new JPanel();
         playerPanel.setLayout(new BoxLayout(playerPanel,BoxLayout.Y_AXIS));
-        playerPanel.setBorder(BorderFactory.createTitledBorder("Players"));
+        playerPanel.setBorder(BorderFactory.createTitledBorder("Connected Players"));
         playerScrollPane= new JScrollPane(playerPanel);
         add( playerScrollPane);
         revalidate();

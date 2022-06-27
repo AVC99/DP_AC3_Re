@@ -1,12 +1,12 @@
 package client.model.persistance;
 
 import client.model.*;
+import client.view.GameMap;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class MapDAO {
     /**

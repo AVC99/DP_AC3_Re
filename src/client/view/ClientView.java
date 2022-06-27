@@ -3,7 +3,6 @@ package client.view;
 import client.controller.ButtonController;
 import client.controller.KeyController;
 import client.model.FilePath;
-import client.model.GameMap;
 import client.model.Player;
 
 import javax.swing.*;
