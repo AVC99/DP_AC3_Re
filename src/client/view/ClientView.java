@@ -1,12 +1,17 @@
 package client.view;
 
+import client.model.GameMap;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ClientView extends JFrame {
     private JPanel mainPanel;
+    private GameMap map;
 
-    public ClientView(){
+    public ClientView(GameMap map){
+        this.map=map;
+
         configureWindow();
         configureCenter();
     }
