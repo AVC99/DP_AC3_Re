@@ -1,7 +1,6 @@
 package client.view;
 
-import client.controller.ButtonController;
-import client.controller.KeyController;
+import client.controller.ClientActionController;
 import client.model.FilePath;
 import client.model.Player;
 
@@ -11,30 +10,27 @@ import java.awt.*;
 public class ClientView extends JFrame {
 
     private GameMap map;
-    private ButtonController buttonController;
-    private KeyController keyController;
+    private JButton upButton;
+    private JButton leftButton;
+    private JButton downButton;
+    private JButton rightButton;
     private HealthBar healthBar;
 
     public ClientView(GameMap map) {
         this.map=map;
-        this.buttonController=new ButtonController(this);
-        this.keyController=new KeyController(this);
-        configureKeys();
         configureWindow();
         configureNorth();
         configureCenter();
         configureSouth();
     }
 
+
+
     private void configureNorth() {
         this.healthBar= new HealthBar();
         this.add(healthBar, BorderLayout.NORTH);
     }
 
-    private void configureKeys() {
-        this.addKeyListener(keyController);
-        setFocusable(true);
-    }
 
     /**
      * Function that configures the center of the window
@@ -64,30 +60,22 @@ public class ClientView extends JFrame {
      */
     private void configureButtons(JPanel southPanel, GridBagConstraints gbc) {
         gbc.gridx=1; gbc.gridy=0;
-        JButton upButton = new JButton(new ImageIcon(FilePath.UP_ARROW_PATH));
-        upButton.setActionCommand("UP");
-        upButton.addActionListener(buttonController);
+        upButton = new JButton(new ImageIcon(FilePath.UP_ARROW_PATH));
         upButton.setFocusable(false);
         southPanel.add(upButton, gbc);
 
         gbc.gridx=0;gbc.gridy=1;
-        JButton leftButton = new JButton(new ImageIcon(FilePath.LEFT_ARROW_PATH));
-        leftButton.setActionCommand("LEFT");
-        leftButton.addActionListener(buttonController);
+         leftButton = new JButton(new ImageIcon(FilePath.LEFT_ARROW_PATH));
         leftButton.setFocusable(false);
         southPanel.add(leftButton,gbc);
 
         gbc.gridx=1;gbc.gridy=1;
-        JButton downButton = new JButton(new ImageIcon(FilePath.DOWN_ARROW_PATH));
-        downButton.setActionCommand("DOWN");
-        downButton.addActionListener(buttonController);
+        downButton = new JButton(new ImageIcon(FilePath.DOWN_ARROW_PATH));
         downButton.setFocusable(false);
         southPanel.add(downButton,gbc);
 
         gbc.gridx=2;gbc.gridy=1;
-        JButton rightButton = new JButton(new ImageIcon(FilePath.RIGHT_ARROW_PATH));
-        rightButton.setActionCommand("RIGHT");
-        rightButton.addActionListener(buttonController);
+        rightButton = new JButton(new ImageIcon(FilePath.RIGHT_ARROW_PATH));
         rightButton.setFocusable(false);
         southPanel.add(rightButton,gbc);
     }
@@ -106,5 +94,19 @@ public class ClientView extends JFrame {
 
     public void addPlayerToList(Player player) {
         this.map.addPlayerToList(player);
+    }
+
+    public void addActionController(ClientActionController actionController) {
+
+        upButton.setActionCommand("UP");
+        upButton.addActionListener(actionController);
+        leftButton.setActionCommand("LEFT");
+        leftButton.addActionListener(actionController);
+        downButton.setActionCommand("DOWN");
+        downButton.addActionListener(actionController);
+        rightButton.setActionCommand("RIGHT");
+        rightButton.addActionListener(actionController);
+        this.addKeyListener(actionController);
+        this.setFocusable(true);
     }
 }

@@ -1,5 +1,6 @@
 package client;
 
+import client.controller.ClientActionController;
 import client.controller.ClientController;
 import client.view.GameMap;
 import client.model.Player;
@@ -39,6 +40,8 @@ public class Client {
         Player player= new Player(playerName, this.map.getStartX(),this.map.getStartY());
         ClientView clientView= new ClientView(map);
         ClientController clientController= new ClientController(player, server, clientView);
+
+        clientView.addActionController(new ClientActionController(clientController));
         RealTimeListener realtimeListener= new RealTimeListener(clientController);
 
     }

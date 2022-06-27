@@ -18,12 +18,12 @@ public class ClientController {
     private ClientView clientView;
     private ArrayList<Player> playerList;
 
-
     public ClientController(Player player, Socket socket, ClientView clientView){
         this.player= player;
         this.socket=socket;
         this.clientView=clientView;
         this.playerList= new ArrayList<>();
+
 
         sendPlayerToServer();
     }
