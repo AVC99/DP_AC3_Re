@@ -45,16 +45,14 @@ public class ServerView extends JFrame {
     }
 
 
-   private void addLog(String log){
+    public void addLog(String log){
         this.logList.add(log);
         refreshLogPanel();
    }
 
-    private void addPlayer(Player player) {
-        player.setName("Test");
+    public void addPlayer(Player player) {
         this.playerList.add(player);
         refreshPlayers();
-
     }
 
     private void configureLeft() {

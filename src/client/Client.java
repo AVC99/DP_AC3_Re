@@ -1,5 +1,6 @@
 package client;
 
+import client.controller.ButtonController;
 import client.controller.ClientController;
 import client.model.GameMap;
 import client.model.Player;

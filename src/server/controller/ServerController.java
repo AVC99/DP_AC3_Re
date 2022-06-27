@@ -14,8 +14,9 @@ public class ServerController {
     private ArrayList<DedicatedServer> dedicatedServers;
     private ServerSocket socket;
 
-    public ServerController(ServerView serverView) {
+    public ServerController(ServerView serverView, ServerSocket socket) {
         this.serverView=serverView;
+        this.socket=socket;
         this.dedicatedServers= new ArrayList<>();
     }
 
@@ -23,11 +24,11 @@ public class ServerController {
         System.out.println("Server listening...");
 
         try{
-            this.socket= new ServerSocket(NetworkConstants.PORT);
+
             while(true){
                 Socket client= socket.accept();
 
-                DedicatedServer dedicatedServer= new DedicatedServer(client,dedicatedServers);
+                DedicatedServer dedicatedServer= new DedicatedServer(client,dedicatedServers, serverView);
                 dedicatedServers.add(dedicatedServer);
                 new Thread(dedicatedServer).start();
             }

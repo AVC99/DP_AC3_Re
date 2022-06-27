@@ -27,7 +27,6 @@ public class RealTimeListener implements Runnable{
            try{
                SocketData socketData = (SocketData) new ObjectInputStream(this.socket.getInputStream()).readObject();
                switch (socketData.getAction()){
-                   case USER_IN -> System.out.println("UserIn");
                    case DISCONNECT -> {
                        System.out.println("UserDisconnected");
                        continueRunning=false;

@@ -1,6 +1,8 @@
 package client.model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private int xPosition;
     private int yPosition;
     private int health;
@@ -15,6 +17,7 @@ public class Player {
     public void takeDamage(int damage){
         this.health-=damage;
     }
+
     public int getxPosition() {
         return xPosition;
     }
