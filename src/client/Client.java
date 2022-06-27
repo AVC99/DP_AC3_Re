@@ -43,6 +43,6 @@ public class Client {
 
         clientView.addActionController(new ClientActionController(clientController));
         RealTimeListener realtimeListener= new RealTimeListener(clientController);
-
+        realtimeListener.run();
     }
 }

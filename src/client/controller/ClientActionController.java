@@ -21,10 +21,10 @@ public class ClientActionController implements ActionListener, KeyListener, Wind
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
-            case "UP"-> System.out.println("UP");
-            case "DOWN"-> System.out.println("DOWN");
-            case "LEFT"-> System.out.println("LEFT");
-            case "RIGHT"-> System.out.println("RIGHT");
+            case "UP"-> clientController.moveIsaac("UP");
+            case "DOWN"-> clientController.moveIsaac("DOWN");
+            case "LEFT"-> clientController.moveIsaac("LEFT");
+            case "RIGHT"-> clientController.moveIsaac("RIGHT");
         }
 
     }
@@ -37,12 +37,11 @@ public class ClientActionController implements ActionListener, KeyListener, Wind
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
-            case W, UP -> System.out.println("UP");
-            case A, LEFT -> System.out.println("LEFT");
-            case S, DOWN -> System.out.println("DOWN");
-            case D, RIGHT -> System.out.println("RIGHT");
+            case W, UP -> clientController.moveIsaac("UP");
+            case A, LEFT -> clientController.moveIsaac("LEFT");
+            case S, DOWN -> clientController.moveIsaac("DOWN");
+            case D, RIGHT -> clientController.moveIsaac("RIGHT");
         }
-
     }
 
     @Override

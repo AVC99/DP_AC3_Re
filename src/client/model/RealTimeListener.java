@@ -2,17 +2,20 @@ package client.model;
 
 import client.controller.ClientController;
 import client.view.ClientView;
+import shared.JsonManager;
 import shared.SocketData;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class RealTimeListener implements Runnable{
 
   private final ClientController clientController;
-    private Socket socket;
+
     private boolean continueRunning;
 
     public RealTimeListener(ClientController clientController) {
@@ -25,10 +28,22 @@ public class RealTimeListener implements Runnable{
     public void run() {
         while(continueRunning){
            try{
-               SocketData socketData = (SocketData) new ObjectInputStream(this.socket.getInputStream()).readObject();
+               SocketData socketData = (SocketData) this.clientController.readSocketDataFromServer().readObject();
+
                switch (socketData.getAction()){
+                   case USER_IN -> {
+                       SwingUtilities.invokeLater(() -> {
+                           this.clientController.addPlayer(JsonManager.getPlayer(socketData.getData()));
+                           System.out.println("player added to the list");
+                       });
+                   }
+                   case PLAYER_MOVEMENT -> SwingUtilities.invokeLater(() -> {
+                           this.clientController.updatePlayerPosition(JsonManager.getPlayer(socketData.getData()));
+                       });
+
+
                    case DISCONNECT -> {
-                       System.out.println("UserDisconnected");
+                       System.out.println("User Disconnected");
                        continueRunning=false;
                    }
                }

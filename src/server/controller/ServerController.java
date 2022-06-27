@@ -22,7 +22,6 @@ public class ServerController {
 
     public void startServer(){
         System.out.println("Server listening...");
-
         try{
 
             while(true){

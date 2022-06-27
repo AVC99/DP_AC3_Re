@@ -1,7 +1,7 @@
 package client.view;
 
 import client.model.Enemy;
-import client.model.FilePath;
+import client.utils.FilePath;
 import client.model.Fly;
 import client.model.Player;
 
@@ -101,6 +101,9 @@ public class GameMap extends JPanel {
         }
     }
 
+    public char[][] getGameBoard() {
+        return gameBoard;
+    }
 
     private void setImages() {
         setPlayerImage();

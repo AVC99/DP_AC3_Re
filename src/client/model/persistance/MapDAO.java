@@ -1,6 +1,7 @@
 package client.model.persistance;
 
 import client.model.*;
+import client.utils.FilePath;
 import client.view.GameMap;
 
 import java.io.IOException;

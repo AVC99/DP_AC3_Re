@@ -1,7 +1,7 @@
 package client.view;
 
 import client.controller.ClientActionController;
-import client.model.FilePath;
+import client.utils.FilePath;
 import client.model.Player;
 
 import javax.swing.*;
@@ -94,6 +94,14 @@ public class ClientView extends JFrame {
 
     public void addPlayerToList(Player player) {
         this.map.addPlayerToList(player);
+    }
+
+    public GameMap getMap() {
+        return map;
+    }
+
+    public HealthBar getHealthBar() {
+        return healthBar;
     }
 
     public void addActionController(ClientActionController actionController) {

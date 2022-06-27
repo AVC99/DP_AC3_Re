@@ -1,4 +1,4 @@
-package client.model;
+package client.utils;
 
 public abstract class FilePath {
     public static final String EMPTY_PATH="./src/resources/cells/empty/0.bmp";

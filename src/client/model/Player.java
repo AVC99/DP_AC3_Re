@@ -33,15 +33,23 @@ public class Player implements Serializable {
     public String getName() {
         return name;
     }
+
     public void resetHealth(){
         this.health=10;
     }
+
     public void move(int gotoX, int gotoY){
         this.xPosition=gotoX;
         this.yPosition=gotoY;
     }
 
+
     public void setName(String name) {
         this.name=name;
+    }
+
+    public void setPosition(int gotoX, int gotoY) {
+        this.xPosition=gotoX;
+        this.yPosition=gotoY;
     }
 }
