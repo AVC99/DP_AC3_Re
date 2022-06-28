@@ -33,7 +33,7 @@ public class RealTimeListener implements Runnable{
                switch (socketData.getAction()){
                    case USER_IN -> {
                        SwingUtilities.invokeLater(() -> {
-                           this.clientController.addPlayer(JsonManager.getPlayer(socketData.getData()));
+                           this.clientController.addPlayer(JsonManager.getPlayerList(socketData.getData()));
                            System.out.println("player added to the list");
                        });
                    }

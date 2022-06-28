@@ -175,4 +175,13 @@ public class GameMap extends JPanel {
     public void addPlayerToList(Player player) {
         this.playerList.add(player);
     }
+
+    public void updatePlayerList(Player player) {
+         for(Player p: playerList){
+            if(p.getName().equals(player.getName())){
+                p.setPosition(player.getxPosition(), player.getyPosition());
+                System.out.println(p.getName()+" Moves");
+            }
+        }
+    }
 }

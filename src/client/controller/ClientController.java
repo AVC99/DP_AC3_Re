@@ -194,9 +194,24 @@ public class ClientController {
         }
     }
 
-    public void addPlayer(Player player) {this.playerList.add(player);
+    public ClientView getClientView() {
+        return clientView;
+    }
 
-       this.clientView.getMap().addPlayerToList(player);
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void addPlayer(ArrayList<Player> serverPlayerList) {
+        for (Player p: serverPlayerList){
+            if(!p.getName().equals(this.player.getName())){
+                this.playerList.add(p);
+                this.clientView.getMap().addPlayerToList(p);
+            }
+            System.out.println(p.getName()+" Position -> "+p.getyPosition()+ p.getyPosition());
+        }
+
+
     }
 
     public ObjectInputStream readSocketDataFromServer() throws IOException {
@@ -204,11 +219,7 @@ public class ClientController {
     }
 
     public void updatePlayerPosition(Player player) {
-        for(Player p: playerList){
-            if(p.getName().equals(player.getName())){
-                p.setPosition(player.getxPosition(), player.getyPosition());
-            }
-        }
+       this.clientView.getMap().updatePlayerList(player);
         this.clientView.getMap().repaint();
     }
 }

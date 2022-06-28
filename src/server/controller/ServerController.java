@@ -1,5 +1,6 @@
 package server.controller;
 
+import client.model.Player;
 import server.DedicatedServer;
 import server.view.ServerView;
 import shared.NetworkConstants;
@@ -13,11 +14,13 @@ public class ServerController {
     private ServerView serverView;
     private ArrayList<DedicatedServer> dedicatedServers;
     private ServerSocket socket;
+    private ArrayList<Player> playerList;
 
     public ServerController(ServerView serverView, ServerSocket socket) {
         this.serverView=serverView;
         this.socket=socket;
         this.dedicatedServers= new ArrayList<>();
+        this.playerList= new ArrayList<>();
     }
 
     public void startServer(){
@@ -27,7 +30,7 @@ public class ServerController {
             while(true){
                 Socket client= socket.accept();
 
-                DedicatedServer dedicatedServer= new DedicatedServer(client,dedicatedServers, serverView);
+                DedicatedServer dedicatedServer= new DedicatedServer(client,dedicatedServers, serverView,playerList);
                 dedicatedServers.add(dedicatedServer);
                 new Thread(dedicatedServer).start();
             }

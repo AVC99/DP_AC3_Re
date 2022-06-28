@@ -17,13 +17,14 @@ public class DedicatedServer implements Runnable {
    private final ArrayList<DedicatedServer> servers;
    private ArrayList<Player> playerList;
 
-    public DedicatedServer(Socket client, ArrayList<DedicatedServer> dedicatedServers, ServerView serverView) {
+    public DedicatedServer(Socket client, ArrayList<DedicatedServer> dedicatedServers, ServerView serverView,
+                           ArrayList<Player> playerList) {
         // We get a socket, but we only really care about its streams (which we create here because we know what we want,
         // i.e. we can decide to only use one of the two, or to switch to Object streams)
             this.servers = dedicatedServers;
             this.socket=client;
             this.serverView=serverView;
-            this.playerList= new ArrayList<>();
+            this.playerList= playerList;
     }
 
     @Override
@@ -34,8 +35,10 @@ public class DedicatedServer implements Runnable {
                 socketData = (SocketData) new ObjectInputStream(this.socket.getInputStream()).readObject();
                 switch (socketData.getAction()) {
                     case USER_IN -> {
+                        this.playerList.add(JsonManager.getPlayer(socketData.getData()));
                        this.serverView.addPlayer(JsonManager.getPlayer(socketData.getData()));
                        this.serverView.addLog("Player " + JsonManager.getPlayer(socketData.getData()).getName() + " has joined the server.");
+                       socketData= new SocketData(SocketActions.USER_IN, JsonManager.toJson(this.playerList));
 
                     }
                     case PLAYER_MOVEMENT ->
@@ -68,9 +71,9 @@ public class DedicatedServer implements Runnable {
     }
     private void broadcast(SocketData socketData){
         for (DedicatedServer s : servers){
-            if(s!=this){
+            //if(s!=this){
                 s.sendData(socketData);
-            }
+           // }
         }
     }
 }
