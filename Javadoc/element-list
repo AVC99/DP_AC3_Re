@@ -1,0 +1,11 @@
+client
+client.controller
+client.model
+client.model.persistance
+client.utils
+client.view
+server
+server.controller
+server.model
+server.view
+shared

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"client"},{"l":"client.controller"},{"l":"client.model"},{"l":"client.model.persistance"},{"l":"client.utils"},{"l":"client.view"},{"l":"server"},{"l":"server.controller"},{"l":"server.model"},{"l":"server.view"},{"l":"shared"}];updateSearchResults();
