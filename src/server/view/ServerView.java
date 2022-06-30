@@ -26,12 +26,16 @@ public class ServerView extends JFrame {
 
     private void refreshPlayers(){
         this.playerPanel.removeAll();
-        for (Player p:playerList){
-            JLabel playerLabel= new JLabel(p.getName());
-            playerPanel.add(playerLabel);
-            playerScrollPane.revalidate();
-            playerScrollPane.repaint();
+        if (playerList.size()>0){
+            for (Player p:playerList){
+                JLabel playerLabel= new JLabel(p.getName());
+                playerPanel.add(playerLabel);
+
+            }
         }
+        playerScrollPane.revalidate();
+        playerScrollPane.repaint();
+
     }
 
     private void refreshLogPanel(){
@@ -79,5 +83,10 @@ public class ServerView extends JFrame {
         this.setTitle("Server Window");
         this.setLocationRelativeTo(null);
         this.setLayout(new GridLayout(1,2));
+    }
+
+    public void removePlayer(Player player) {
+        this.playerList.removeIf(p -> p.getName().equals(player.getName()));
+        refreshPlayers();
     }
 }

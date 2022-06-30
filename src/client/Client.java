@@ -11,7 +11,10 @@ import shared.NetworkConstants;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.rmi.ConnectIOException;
 
 public class Client {
     private GameMap map;
@@ -23,26 +26,29 @@ public class Client {
     this.map= new MapDAO().startGameMap();
 
     }
-    public static  void main(String[] args){
-        try{
-           Socket server = new Socket(NetworkConstants.IP, NetworkConstants.PORT);
-            Client client= new Client(server);
-
+    public static  void main(String[] args) {
+        try {
+            Socket server = new Socket(NetworkConstants.IP, NetworkConstants.PORT);
+            Client client = new Client(server);
             client.start();
 
-        }catch ( IOException e){// TODO check if UnknownHostException is needed here
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Starts the client
+     */
     private void start() {
         String playerName= JOptionPane.showInputDialog("Insert the player name: ");
         Player player= new Player(playerName, this.map.getStartX(),this.map.getStartY());
-        ClientView clientView= new ClientView(map);
+        clientView= new ClientView(map, playerName);
         ClientController clientController= new ClientController(player, server, clientView);
 
         clientView.addActionController(new ClientActionController(clientController));
         RealTimeListener realtimeListener= new RealTimeListener(clientController);
         realtimeListener.run();
     }
+
 }

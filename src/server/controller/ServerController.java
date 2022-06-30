@@ -1,9 +1,8 @@
 package server.controller;
 
 import client.model.Player;
-import server.DedicatedServer;
+import server.model.DedicatedServer;
 import server.view.ServerView;
-import shared.NetworkConstants;
 
 import java.io.IOException;
 import java.net.ServerSocket;

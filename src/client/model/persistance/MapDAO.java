@@ -19,7 +19,7 @@ public class MapDAO {
         try{
             String mapText= new String(Files.readAllBytes(Path.of(FilePath.MAP_PATH)));
             //TODO CHANGE /r for /n
-            String[] lines= mapText.split("\r\n");
+            String[] lines= mapText.split(System.lineSeparator());
 
 
             int sizeX= Integer.parseInt(lines[0]);

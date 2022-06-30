@@ -8,6 +8,8 @@ import shared.SocketActions;
 import shared.SocketData;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
@@ -30,6 +32,7 @@ public class ClientController {
         this.clientView=clientView;
         this.playerList= new ArrayList<>();
 
+        addWindowController();
         sendPlayerToServer();
     }
 
@@ -79,8 +82,7 @@ public class ClientController {
      * @return true/false
      */
     private boolean canIsaacMove(int x, int y){
-        if( x>0 && x<=16 && y>0 && y<=16 && clientView.getMap().getGameBoard()[x][y]!= CellType.WALL) return true;
-        else return  false;
+        return x > 0 && x <= 16 && y > 0 && y <= 16 && clientView.getMap().getGameBoard()[x][y] != CellType.WALL;
     }
 
     /**
@@ -95,6 +97,7 @@ public class ClientController {
         if(hasIsaacWon(gotoX, gotoY)){
             sendWinToServer();
             createVictoryPane();
+            restart();
         }else{
             if(isSpikeCell(gotoX, gotoY)){
                player.takeDamage(SPIKE_DAMAGE);
@@ -103,11 +106,50 @@ public class ClientController {
             if(hasIsaacLost()){
                 sendLossToServer();
                 createLosingPane();
+                restart();
             }
         }
 
     }
 
+    private void restart() {
+        this.player.resetHealth();
+        this.player.setPosition(this.clientView.getMap().getStartX(), this.clientView.getMap().getStartY());
+        this.clientView.getHealthBar().setValue(this.player.getHealth());
+        this.clientView.getMap().repaint();
+        this.clientView.repaint();
+    }
+
+    /**
+     * Adds listener to the Client window so when the player exits it disconnects them from the game and the server
+     */
+    private void addWindowController(){
+        this.clientView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.clientView.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                disconnectFromServer();
+                clientView.dispose();
+                System.exit(0);
+            }
+        });
+    }
+
+    /**
+     * Method that removes player from the game and disconnects them from the server
+     */
+    private void disconnectFromServer() {
+        /*try{
+            this.sendSocketDataToServer(SocketActions.DISCONNECT, JsonManager.toJson(this.player));
+
+            this.socket.close();
+        }catch (IOException e){
+            e.printStackTrace();
+            System.out.println("The player "+ this.player.getName()+" could not disconnect correctly");
+        }*/
+        this.sendSocketDataToServer(SocketActions.DISCONNECT, JsonManager.toJson(this.player));
+
+    }
 
 
     /**
@@ -194,32 +236,55 @@ public class ClientController {
         }
     }
 
-    public ClientView getClientView() {
-        return clientView;
-    }
 
-    public ArrayList<Player> getPlayerList() {
-        return playerList;
-    }
 
+    /**
+     * Method that adds players to the game playerList
+     * @param serverPlayerList playerList from the server
+     */
     public void addPlayer(ArrayList<Player> serverPlayerList) {
         for (Player p: serverPlayerList){
             if(!p.getName().equals(this.player.getName())){
                 this.playerList.add(p);
                 this.clientView.getMap().addPlayerToList(p);
             }
-            System.out.println(p.getName()+" Position -> "+p.getyPosition()+ p.getyPosition());
         }
 
 
     }
 
+    /**
+     * Function that reads data from the server
+     * @return data sent by the server
+     * @throws IOException Exception
+     */
     public ObjectInputStream readSocketDataFromServer() throws IOException {
         return new ObjectInputStream(this.socket.getInputStream());
     }
 
+    /**
+     * Method that updates and repaints the players
+     * @param player player
+     */
     public void updatePlayerPosition(Player player) {
        this.clientView.getMap().updatePlayerList(player);
         this.clientView.getMap().repaint();
     }
+
+    /**
+     * Method that removes a desired player from the playerlist
+     * @param player player
+     */
+    public void removePlayer(Player player) {
+       this.playerList.remove(player);
+       this.clientView.getMap().removePlayer(player);
+       this.clientView.repaint();
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 }

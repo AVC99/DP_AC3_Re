@@ -2,7 +2,7 @@ package client.controller;
 
 import java.awt.event.*;
 
-public class ClientActionController implements ActionListener, KeyListener, WindowListener {
+public class ClientActionController implements ActionListener, KeyListener{
     private ClientController clientController;
     private final static int W = 87;
     private final static int A = 65;
@@ -49,39 +49,5 @@ public class ClientActionController implements ActionListener, KeyListener, Wind
 
     }
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
 }
 

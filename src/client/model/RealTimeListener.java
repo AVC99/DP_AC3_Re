@@ -20,37 +20,48 @@ public class RealTimeListener implements Runnable{
 
     public RealTimeListener(ClientController clientController) {
         this.clientController= clientController;
-
         this.continueRunning = true;
     }
 
+    /**
+     * Reads all the messages from the server and calls client controller methods for each action
+     */
     @Override
     public void run() {
         while(continueRunning){
            try{
+
                SocketData socketData = (SocketData) this.clientController.readSocketDataFromServer().readObject();
 
                switch (socketData.getAction()){
-                   case USER_IN -> {
-                       SwingUtilities.invokeLater(() -> {
-                           this.clientController.addPlayer(JsonManager.getPlayerList(socketData.getData()));
-                           System.out.println("player added to the list");
-                       });
-                   }
-                   case PLAYER_MOVEMENT -> SwingUtilities.invokeLater(() -> {
-                           this.clientController.updatePlayerPosition(JsonManager.getPlayer(socketData.getData()));
-                       });
+                   case USER_IN -> SwingUtilities.invokeLater(() ->
+                           this.clientController.addPlayer(JsonManager.getPlayerList(socketData.getData()))
+                       );
+
+                   case PLAYER_MOVEMENT -> SwingUtilities.invokeLater(() ->
+                           this.clientController.updatePlayerPosition(JsonManager.getPlayer(socketData.getData()))
+                       );
 
 
-                   case DISCONNECT -> {
-                       System.out.println("User Disconnected");
-                       continueRunning=false;
-                   }
+                   case DISCONNECT -> SwingUtilities.invokeLater(()->
+                       this.clientController.removePlayer(JsonManager.getPlayer(socketData.getData()))
+                   );
+
+
                }
            }catch (IOException | ClassNotFoundException e){
+
                e.printStackTrace();
+               this.stop();
            }
         }
 
+    }
+
+    /**
+     * Stops the thread from running
+     */
+    public  void stop(){
+        continueRunning=false;
     }
 }

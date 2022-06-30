@@ -6,6 +6,9 @@ import client.model.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class ClientView extends JFrame {
 
@@ -16,13 +19,15 @@ public class ClientView extends JFrame {
     private JButton rightButton;
     private HealthBar healthBar;
 
-    public ClientView(GameMap map) {
+    public ClientView(GameMap map, String playername) {
         this.map=map;
-        configureWindow();
+
+        configureWindow(playername);
         configureNorth();
         configureCenter();
         configureSouth();
     }
+
 
 
 
@@ -83,10 +88,10 @@ public class ClientView extends JFrame {
     /**
      * Function that configures the window
      */
-    private void configureWindow() {
+    private void configureWindow(String playername) {
         this.setSize(700,800);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("TBOI wannabe multiplayer game");
+        this.setTitle(playername+"'s TBOI wannabe multiplayer game");
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
         this.setVisible(true);

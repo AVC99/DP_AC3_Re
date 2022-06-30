@@ -180,8 +180,18 @@ public class GameMap extends JPanel {
          for(Player p: playerList){
             if(p.getName().equals(player.getName())){
                 p.setPosition(player.getxPosition(), player.getyPosition());
-                System.out.println(p.getName()+" Moves");
             }
+        }
+    }
+
+    public void removePlayer(Player player) {
+        int i=0;
+        for(Player p : playerList){
+            if (p.getName().equals(player.getName())) {
+                this.playerList.remove(i);
+                break;
+            }
+            i++;
         }
     }
 }
