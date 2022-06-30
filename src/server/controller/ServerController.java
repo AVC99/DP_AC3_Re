@@ -22,6 +22,9 @@ public class ServerController {
         this.playerList= new ArrayList<>();
     }
 
+    /**
+     * Starts the server
+     */
     public void startServer(){
         System.out.println("Server listening...");
         try{

@@ -24,6 +24,9 @@ public class ServerView extends JFrame {
         configureLeft();
     }
 
+    /**
+     * Refreshes the players panel
+     */
     private void refreshPlayers(){
         this.playerPanel.removeAll();
         if (playerList.size()>0){
@@ -38,6 +41,9 @@ public class ServerView extends JFrame {
 
     }
 
+    /**
+     * Refreshes the logs panel
+     */
     private void refreshLogPanel(){
         this.logPanel.removeAll();
         for (String log: logList){
@@ -48,17 +54,27 @@ public class ServerView extends JFrame {
         }
     }
 
-
+    /**
+     * Adds log to the log panel
+     * @param log log to be added
+     */
     public void addLog(String log){
         this.logList.add(log);
         refreshLogPanel();
    }
 
+    /**
+     * Adds player to the player panel
+     * @param player player to be added
+     */
     public void addPlayer(Player player) {
         this.playerList.add(player);
         refreshPlayers();
     }
 
+    /**
+     * Configures left side of the view
+     */
     private void configureLeft() {
         logPanel= new JPanel();
         logPanel.setLayout(new BoxLayout(logPanel,BoxLayout.Y_AXIS));
@@ -68,6 +84,9 @@ public class ServerView extends JFrame {
         revalidate();
     }
 
+    /**
+     * Configures right side of the view
+     */
     private void configureRight() {
         playerPanel= new JPanel();
         playerPanel.setLayout(new BoxLayout(playerPanel,BoxLayout.Y_AXIS));
@@ -77,6 +96,9 @@ public class ServerView extends JFrame {
         revalidate();
     }
 
+    /**
+     * Configures the window
+     */
     private void configureWindow() {
         this.setSize(500,300);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -85,6 +107,10 @@ public class ServerView extends JFrame {
         this.setLayout(new GridLayout(1,2));
     }
 
+    /**
+     * Removes player from the player panel
+     * @param player player to be removed
+     */
     public void removePlayer(Player player) {
         this.playerList.removeIf(p -> p.getName().equals(player.getName()));
         refreshPlayers();

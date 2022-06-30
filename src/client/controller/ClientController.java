@@ -162,10 +162,16 @@ public class ClientController {
         return this.clientView.getMap().getGameBoard()[x][y] == CellType.SPIKES;
     }
 
+    /**
+     * Creates a PopUp message telling the client that they lost
+     */
     private void createLosingPane() {
         JOptionPane.showMessageDialog(null,"YOU LOST","LOST",JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Creates a PopUp message telling the client that they won
+     */
     private void createVictoryPane() {
         JOptionPane.showMessageDialog(null,"WINNER WINNER CHICKEN DINNER","Winner",JOptionPane.ERROR_MESSAGE);
     }
@@ -236,8 +242,6 @@ public class ClientController {
         }
     }
 
-
-
     /**
      * Method that adds players to the game playerList
      * @param serverPlayerList playerList from the server
@@ -283,7 +287,6 @@ public class ClientController {
             this.socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 

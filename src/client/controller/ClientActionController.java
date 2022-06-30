@@ -17,7 +17,10 @@ public class ClientActionController implements ActionListener, KeyListener{
         this.clientController = clientController;
     }
 
-
+    /**
+     * Tells the ClientController to do an action depending on the button pressed
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
@@ -34,6 +37,10 @@ public class ClientActionController implements ActionListener, KeyListener{
 
     }
 
+    /**
+     * Tells the ClientController to do an action depending on the key pressed
+     * @param e KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){

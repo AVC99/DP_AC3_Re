@@ -1,6 +1,7 @@
 package client.view;
 
 import client.model.Enemy;
+import client.utils.CellType;
 import client.utils.FilePath;
 import client.model.Fly;
 import client.model.Player;
@@ -16,48 +17,38 @@ import java.util.ArrayList;
 public class GameMap extends JPanel {
 
     private char[][] gameBoard;
-    private Player player;
+
     private ArrayList<Player> playerList;
 
     private final int xSize;
     private final int ySize;
 
-
     private BufferedImage image;
     private BufferedImage playerImage;
-    private BufferedImage spiderImage;
-    private BufferedImage flyImage;
 
-    private ArrayList<Enemy> enemyList;
 
-    public GameMap(char[][] gameBoard, int playerPositionX, int playerPositionY, int sizeX, int sizeY, ArrayList<Enemy> enemyList) {
+    public GameMap(char[][] gameBoard, int sizeX, int sizeY) {
         this.gameBoard=gameBoard;
         this.xSize= sizeX;
         this.ySize=sizeY;
-        this.enemyList=enemyList;
+
         this.playerList= new ArrayList<>();
 
         setImages();
     }
-    public GameMap(char[][] gameBoard, int playerPositionX, int playerPositionY, int sizeX, int sizeY, ArrayList<Enemy> enemyList,Player player) {
-        this.gameBoard=gameBoard;
-        this.player= player;
-        this.xSize= sizeX;
-        this.ySize=sizeY;
-        this.enemyList=enemyList;
-        this.playerList= new ArrayList<>();
 
-        setImages();
-
-    }
+    /**
+     * Function that switches the image to paint depending on the  type of cell
+     * @param cell cell
+     */
     private void changeCellPath(char cell){
         try{
             switch (cell){
-                case'#'-> image=ImageIO.read(new File(FilePath.WALL_PATH));
-                case ' ', '-', '|' -> image=ImageIO.read(new File(FilePath.EMPTY_PATH));
-                case 'X'-> image=ImageIO.read(new File(FilePath.SPIKES_PATH));
-                case 'S'-> image=ImageIO.read(new File(FilePath.START_PATH));
-                case 'W'-> image=ImageIO.read(new File(FilePath.VICTORY_PATH));
+                case CellType.WALL-> image=ImageIO.read(new File(FilePath.WALL_PATH));
+                case CellType.EMPTY -> image=ImageIO.read(new File(FilePath.EMPTY_PATH));
+                case CellType.SPIKES-> image=ImageIO.read(new File(FilePath.SPIKES_PATH));
+                case CellType.START-> image=ImageIO.read(new File(FilePath.START_PATH));
+                case CellType.FINISH-> image=ImageIO.read(new File(FilePath.VICTORY_PATH));
 
             }
         }catch (IOException e){
@@ -79,16 +70,7 @@ public class GameMap extends JPanel {
             for (int j=0; j<ySize;j++){
                 changeCellPath(gameBoard[j][i]);
                 g.drawImage(image,i*cellWidth,j*cellHeight,cellWidth,cellHeight,null);
-                for(Enemy e: enemyList){
-                    if(j==e.getXPosition() && i==e.getYPosition()){
-                        if(e instanceof Fly){
-                            g.drawImage(flyImage,i*cellWidth,j*cellHeight,cellWidth,cellHeight,null);
 
-                        }else g.drawImage(spiderImage,i*cellWidth,j*cellHeight,cellWidth,cellHeight,null);
-
-
-                    }
-                }
                 for(Player p: playerList){
                     if(j==p.getxPosition() && i==p.getyPosition()){
                         g.drawImage(playerImage,i*cellWidth,j*cellHeight,cellWidth,cellHeight,null);
@@ -101,32 +83,19 @@ public class GameMap extends JPanel {
         }
     }
 
+    /**
+     * Getter of the game board
+     * @return gameBoard
+     */
     public char[][] getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * Sets the player image and the enemies image
+     */
     private void setImages() {
         setPlayerImage();
-        setSpiderImage();
-        setFlyImage();
-    }
-
-    private void setSpiderImage() {
-        try{
-            spiderImage= ImageIO.read(new File(FilePath.SPIDER_PATH));
-        }catch (IOException e){
-            e.printStackTrace();
-            System.out.println("Could not find the Player image");
-        }
-    }
-    private void setFlyImage(){
-        try{
-            flyImage= ImageIO.read(new File(FilePath.FLY_PATH));
-        }catch (IOException e){
-            e.printStackTrace();
-            System.out.println("Could not find the Player image");
-        }
-
     }
 
     /**
@@ -148,7 +117,7 @@ public class GameMap extends JPanel {
     public int getStartY(){
         for (int i=0;i<xSize;i++){
             for (int j=0; j<ySize;j++){
-                if (this.gameBoard[i][j]=='S'){
+                if (this.gameBoard[i][j]==CellType.START){
                     //startY=j;
                     return j;
                 }
@@ -163,7 +132,7 @@ public class GameMap extends JPanel {
     public int getStartX(){
         for (int i=0;i<xSize;i++){
             for (int j=0; j<ySize;j++){
-                if (this.gameBoard[i][j]=='S'){
+                if (this.gameBoard[i][j]==CellType.START){
                     //xStart=i;
                     return i;
                 }
@@ -172,10 +141,18 @@ public class GameMap extends JPanel {
         return 0;
     }
 
+    /**
+     * Adds player to the playerList
+     * @param player player to add
+     */
     public void addPlayerToList(Player player) {
         this.playerList.add(player);
     }
 
+    /**
+     * Updates players positions
+     * @param player Player to update
+     */
     public void updatePlayerList(Player player) {
          for(Player p: playerList){
             if(p.getName().equals(player.getName())){
@@ -184,6 +161,10 @@ public class GameMap extends JPanel {
         }
     }
 
+    /**
+     * Removes player from the playerList
+     * @param player player that has to be removed
+     */
     public void removePlayer(Player player) {
         int i=0;
         for(Player p : playerList){

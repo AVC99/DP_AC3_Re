@@ -28,6 +28,9 @@ public class DedicatedServer implements Runnable {
             this.exit=false;
     }
 
+    /**
+     * Runs the dedicated server
+     */
     @Override
     public void run() {
         try {
@@ -81,6 +84,10 @@ public class DedicatedServer implements Runnable {
         }
     }
 
+    /**
+     * Broadcasts to all other servers but his client
+     * @param socketData data from the socket
+     */
     private void broadcast(SocketData socketData) {
         for (DedicatedServer s : servers){
             if(s!=this){
@@ -89,6 +96,10 @@ public class DedicatedServer implements Runnable {
         }
     }
 
+    /**
+     * Sends data through the socket
+     * @param socketData data to be sent
+     */
     private void sendData(SocketData socketData){
         try{
             ObjectOutputStream objectOutputStream= new ObjectOutputStream(this.socket.getOutputStream());
@@ -97,6 +108,11 @@ public class DedicatedServer implements Runnable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Broadcast to all severs
+     * @param socketData data to be sent
+     */
     private void broadcastToAll(SocketData socketData){
         for (DedicatedServer s : servers){
             //if(s!=this){

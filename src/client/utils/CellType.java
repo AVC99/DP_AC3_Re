@@ -7,4 +7,5 @@ public abstract class CellType {
     public static final char FINISH = 'W';
     public static final char SPIDER = '-';
     public static final char FLY = '|';
+    public static final char EMPTY=' ';
 }
